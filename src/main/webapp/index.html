@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<head>
+<script type="text/javascript"
+	src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+</head>
+<body>
+	<h1>POLLING</h1>
+	<dl>
+		<dt>CountUp:</dt>
+		<dd></dd>
+	</dl>
+
+	<script type="text/javascript">
+		$(function() {
+			var POLLLING_INVERVAL_TIME_IN_MILLIS = 10000;//10s
+			(function polling() {
+				getCountUp();
+				window.setTimeout(polling, POLLLING_INVERVAL_TIME_IN_MILLIS);
+			}());
+
+			function getCountUp() {
+				$.ajax({
+					type : "GET",
+					url : "countUp",
+					content : "application/json",
+					dataType : "json",
+				}).done(function(data) {
+					$("dd").text(data.count);
+				}).fail(function(jqXHR, textStatus) {
+					$("dd").text("error occured");
+				});
+			}
+		});
+	</script>
+</body>
+</html>
